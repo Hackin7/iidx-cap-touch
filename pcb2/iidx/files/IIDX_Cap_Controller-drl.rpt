@@ -1,0 +1,22 @@
+Drill report for IIDX_Cap_Controller.kicad_pcb
+Created on 8/1/2024 8:14:48 am
+
+Copper Layer Stackup:
+    =============================================================
+    L1 :  F.Cu                      front
+    L2 :  B.Cu                      back
+
+
+Drill file 'IIDX_Cap_Controller-PTH.drl' contains
+    plated through holes:
+    =============================================================
+    T1  1.000mm  0.0394"  (20 holes)
+
+    Total plated holes count 20
+
+
+Drill file 'IIDX_Cap_Controller-NPTH.drl' contains
+    unplated through holes:
+    =============================================================
+
+    Total unplated holes count 0
