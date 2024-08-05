@@ -1,6 +1,6 @@
 '''
 # SPDX-FileCopyrightText: 2017 Limor Fried for Adafruit Industries
-#
+# 
 # SPDX-License-Identifier: MIT
 # If you run this and it seems to hang, try manually unlocking
 # your I2C bus from the REPL with
@@ -41,20 +41,20 @@ import adafruit_mpr121
 import time
 
 
-keycodes = ([Keycode.Z, Keycode.X] + [Keycode.A, Keycode.F, Keycode.F] +
-[Keycode.F,Keycode.T,Keycode.G,Keycode.Y,Keycode.H,Keycode.U,Keycode.J][::1])
+keycodes = ([Keycode.F,Keycode.T,Keycode.G,Keycode.Y,Keycode.H,Keycode.U,Keycode.J][::-1] + [Keycode.A, Keycode.F, Keycode.F] +  [Keycode.Z, Keycode.X])
 key_prev_value = [False for i in range(len(keycodes))]
 
 
-i2c = busio.I2C(scl=board.GP3, sda=board.GP2)
+#i2c = busio.I2C(scl=board.GP3, sda=board.GP2)
+i2c = busio.I2C(scl=board.GP21, sda=board.GP20)
 #i2c = busio.I2C(board.SCL1, board.SDA1)
 keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)  # We're in the US :)
 mpr121 = adafruit_mpr121.MPR121(i2c)#, address=0x5c)
 
 mouse = Mouse(usb_hid.devices)
-i2c1 = busio.I2C(scl=board.GP1, sda=board.GP0)
-mpr121_turntable = adafruit_mpr121.MPR121(i2c1)#, address=0x5c)
+#i2c1 = busio.I2C(scl=board.GP1, sda=board.GP0)
+#mpr121_turntable = adafruit_mpr121.MPR121(i2c1)#, address=0x5c)
 turntable_count = 0
 turntable_last_pressed = time.monotonic()
 
@@ -104,6 +104,7 @@ def run():
                 keyboard.release(keycodes[i])
                 prev_key = keycodes[i]
         #time.sleep(0.01)
+        '''
         for i in range(len(keycodes)):
             if mpr121_turntable[i].value == turntable_prev_value[i]:
                 continue
@@ -119,8 +120,6 @@ def run():
                     pass
                 turntable_last_pressed = time.monotonic()
                 if prev_turntable != -1 and prev_turntable != i:
-                    mouse.move(y=50)
-                    '''
                     if 1 <= prev_turntable - i <= 2:
                         print("mouse down")
                         mouse.move(y=50)
@@ -130,7 +129,6 @@ def run():
                         mouse.move(y=-50)
                         #keyboard.press(Keycode.UP_ARROW)
                     #print(f"prev {prev_turntable} touched!")
-                    '''
 
                 ########################################################
                 prev_turntable = i
@@ -138,6 +136,8 @@ def run():
                 pass
                 #keyboard.release(keycodes[i])
                 #prev_turntable = -1
+
+        '''
 while True:
     try:
         run()
